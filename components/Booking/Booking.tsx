@@ -1,6 +1,8 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import AutoCompleteAddress from './AutoCompleteAddress/AutoCompleteAddress'
+import Cars from './Cars';
+import Cards from './Cards';
 
 function Booking() {
   const [screenHeight, setScreenHeight] = useState(0);
@@ -18,6 +20,11 @@ function Booking() {
         style={{ height: screenHeight }}
       >
         <AutoCompleteAddress />
+        <Cars />
+        <Cards />
+
+        <button className='w-full bg-purple-600 p-1 rounded-md mt-4 text-white'>Book</button>
+        
       </div>
     </div>
   );
