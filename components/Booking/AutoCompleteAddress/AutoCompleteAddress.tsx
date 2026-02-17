@@ -6,7 +6,7 @@ const session_token='5ccce4a4-ab0a-4a7c-943d-580e55542363'
 const MAPBOX_RETRIVE_URL='https://api.mapbox.com/search/searchbox/v1/retrieve/'
 function AutocompleteAddress() {
 
-    const [source,setSource]=useState<any>()
+    const [source,setSource]=useState<any>("");
     const [sourceChange,setSourceChange]=useState<any>(false)
     const [destinationChange,setDestinationChange]=useState<any>(false)
 
@@ -15,7 +15,7 @@ function AutocompleteAddress() {
     =useContext(DestinationCordiContext);
 
     const [addressList,setAddressList]=useState<any>([]);
-    const [destination,setDistination]=useState<any>()
+    const [destination,setDistination]=useState<any>("");
 
     useEffect(()=>{
         const delayDebounceFn=  setTimeout(()=>{

@@ -1,9 +1,19 @@
+import { DirectionDataContext } from '@/context/DirectionDataContext';
 import CarList from '@/data/CarList'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 
 function Cars() {
   const [selectedCar, setSelectedCar] = useState<number | null>(null);
+const {directionData, setDirectionData} 
+    = useContext(DirectionDataContext);
+
+const getCost = (charges: number) => {
+  const distance = directionData?.routes?.[0]?.distance ?? 0;
+
+  return (charges * distance * 0.000621371192).toFixed(2);
+};
+
 
   return (
     <div className='mt-3'>
@@ -33,7 +43,7 @@ function Cars() {
             <h2 className='text-[12px] text-gray-500'>
               {item.name}
               <span className='float-right text-black font-medium'>
-                £{item.charges * 2}
+                £{getCost(item.charges)}
               </span>
             </h2>
           </div>

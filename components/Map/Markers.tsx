@@ -14,23 +14,14 @@ function Markers() {
   return (
     <div>
 
-      {/* User Marker */}
-      {/* {userLocation && ( */}
-        <Marker
-          longitude={userLocation?.lng}
-          latitude={userLocation?.lat}
-          anchor="bottom"
-        >
-          <img src="./pin.png" className="w-10 h-10" />
-        </Marker>
-      {/* )} */}
+  
 
       {/* Source Marker */}
      {sourceCordinates? <Marker
           longitude={sourceCordinates?.lng}
           latitude={sourceCordinates?.lat}
           anchor="bottom" >
-          <img src="./pin.png" className="w-10 h-10" />
+          <img src="./location.png" className="w-10 h-10" />
         </Marker>:null}
     
 
@@ -39,7 +30,7 @@ function Markers() {
           longitude={destinationCordinates?.lng}
           latitude={destinationCordinates?.lat}
           anchor="bottom" >
-          <img src="./pin.png" className="w-10 h-10" />
+          <img src="./location.png" className="w-10 h-10" />
         </Marker>:null}
 
     </div>
