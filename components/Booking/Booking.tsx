@@ -1,11 +1,17 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import AutoCompleteAddress from './AutoCompleteAddress/AutoCompleteAddress'
+import { SelectedCarAmountContext } from '@/context/SelectedCarAmountContext';
 import Cars from './Cars';
 import Cards from './Cards';
 
+import { useRouter } from "next/navigation";
+
+
 function Booking() {
   const [screenHeight, setScreenHeight] = useState(0);
+  const {carAmount,setCarAmount} = useContext(SelectedCarAmountContext)
+  const router:any=useRouter()
 
   useEffect(() => {
     setScreenHeight(window.innerHeight * 0.72);
@@ -23,7 +29,13 @@ function Booking() {
         <Cars />
         <Cards />
 
-        <button className='w-full bg-purple-600 p-1 rounded-md mt-4 text-white'>Book</button>
+        <button 
+        className={`w-full bg-purple-600 p-1 
+        rounded-md 
+        mt-4 text-white ${!carAmount?'bg-gray-200':null}`}
+        onClick={(() => router.push('/payment'))}
+        // disabled={!carAmount}
+        >Book</button>
         
       </div>
     </div>

@@ -3,30 +3,30 @@ export default[
         id:1,
         name:'CrewVan',
         image:'/crew_van.png',
-        charges:1
+        charges:2.0
     },
     {
         id:2,
         name:'MiniVan',
         image:'/22.png',
-        charges:1.2
+        charges:2.1
     },
     {
         id:3,
         name:'LutonVan',
         image:'/luton.png',
-        charges:1.5
+        charges:2.8
     },
     {
         id:4,
         name:'Luxury',
         image:'/44.png',
-        charges:2
+        charges:1.8
     },
     {
         id:5,
         name:'Electric',
         image:'/55.png',
-        charges:2.2
+        charges:1.8
     }
 ]

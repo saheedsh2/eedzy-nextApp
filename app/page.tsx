@@ -5,6 +5,7 @@ import { DestinationCordiContext } from "@/context/DestinationCordiContext";
 import { DirectionDataContext } from "@/context/DirectionDataContext";
 import { SourceCordiContext } from "@/context/SourceCordContext";
 import { UserLocationContext } from "@/context/UserLocationContext";
+import {SelectedCarAmountContext} from "@/context/SelectedCarAmountContext"
 import { useEffect, useState } from "react";
 
 
@@ -17,6 +18,7 @@ export default function Home() {
     const [sourceCordinates, setSourceCordinates] = useState<any>();
     const [destinationCordinates, setDestinationCordinates] = useState<any>();
     const [directionData, setDirectionData] = useState<any>();
+    const [carAmount, setCarAmount] = useState<any>();
 
   useEffect(() => {
     getUserLocation();
@@ -41,6 +43,8 @@ export default function Home() {
       <SourceCordiContext.Provider value={{sourceCordinates, setSourceCordinates}}>
       <DestinationCordiContext.Provider value={{destinationCordinates, setDestinationCordinates}}>
       <DirectionDataContext.Provider value={{directionData, setDirectionData}}>
+      <SelectedCarAmountContext.Provider value={{carAmount, setCarAmount}}>
+
       <div className="grid grid-cols-1 md:grid-cols-3">
         
         <div>
@@ -52,7 +56,7 @@ export default function Home() {
 
       </div>
     
-     
+      </SelectedCarAmountContext.Provider>
       </DirectionDataContext.Provider>
       </DestinationCordiContext.Provider>
       </SourceCordiContext.Provider>
