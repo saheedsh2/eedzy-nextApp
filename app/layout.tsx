@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { Inter, Outfit } from 'next/font/google'
 import Navbar from '@/components/Navbar'
 
+
 const outfit = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -16,6 +17,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+
   return (
      <ClerkProvider>
     <html lang="en">
