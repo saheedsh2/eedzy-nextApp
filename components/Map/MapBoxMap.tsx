@@ -1,12 +1,94 @@
 "use client";
 import { UserLocationContext } from "@/context/UserLocationContext";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import Map, { Marker } from "react-map-gl/mapbox";
 import "mapbox-gl/dist/mapbox-gl.css";
 import Markers from "./Markers";
+import { SourceCordiContext } from "@/context/SourceCordContext";
+import { DestinationCordiContext } from "@/context/DestinationCordiContext";
+import { DirectionDataContext } from "@/context/DirectionDataContext";
+import MapBoxRoute from "./MapBoxRoute";
+
+const MAPBOX_DRIVING_ENDPOINT =
+  "https://api.mapbox.com/directions/v5/mapbox/driving/";
+
+const session_token = "5ccce4a4-ab0a-4a7c-943d-580e55542363";
 
 function MapboxMap() {
   const { userLocation } = useContext(UserLocationContext);
+  const mapRef = useRef<any>("");
+   
+    const { sourceCordinates } = useContext(SourceCordiContext);
+    const { destinationCordinates } = useContext(DestinationCordiContext);
+
+    const {directionData, setDirectionData} = useContext(DirectionDataContext);
+
+// Fly to Source Marker location
+
+    useEffect(() => {
+      if(sourceCordinates)
+      {
+        mapRef.current?.flyTo({
+          center:[
+            sourceCordinates.lng,
+            sourceCordinates.lat
+          ],
+          duration: 2500
+        })
+      }
+
+    },[sourceCordinates]);
+
+
+
+    // Fly to Destination Marker location
+
+        useEffect(() => {
+      if(destinationCordinates)
+      {
+        mapRef.current?.flyTo({
+          center:[
+            destinationCordinates.lng,
+            destinationCordinates.lat
+          ],
+          duration: 2500
+        });
+      }
+
+      if(sourceCordinates&&destinationCordinates)
+      {
+        getDirectionRoute();
+      }
+
+    },[destinationCordinates]);
+
+  const getDirectionRoute = async () => {
+    const res = await fetch(
+      MAPBOX_DRIVING_ENDPOINT +
+        sourceCordinates.lng +
+        "," +
+        sourceCordinates.lat +
+        ";" +
+        destinationCordinates.lng +
+        "," +
+        destinationCordinates.lat +
+        "?overview=full&geometries=geojson" +
+        "&access_token=" +
+        process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const result = await res.json();
+    console.log(result);
+    console.log(result.routes);
+    setDirectionData(result);
+  };
+
+
 
   if (!userLocation) return <p>Loading map...</p>;
 
@@ -15,7 +97,9 @@ function MapboxMap() {
       <h2 className="text-[20px] font-semibold">Map</h2>
 
       <div className="rounded-lg overflow-hidden">
+        {userLocation ? (
         <Map
+        ref={mapRef}
           mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
           initialViewState={{
             longitude: userLocation.lng,
@@ -27,8 +111,13 @@ function MapboxMap() {
         >
 
           <Markers />
-         
-        </Map>
+            {directionData?.routes ? (
+              <MapBoxRoute
+                coordinates={directionData?.routes[0]?.geometry?.coordinates}
+              />
+            ) : null}
+          </Map>
+        ) : null}
       </div>
     </div>
   );
