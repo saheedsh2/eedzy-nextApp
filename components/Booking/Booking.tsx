@@ -4,18 +4,21 @@ import AutoCompleteAddress from './AutoCompleteAddress/AutoCompleteAddress'
 import { SelectedCarAmountContext } from '@/context/SelectedCarAmountContext';
 import Cars from './Cars';
 import Cards from './Cards';
-
 import { useRouter } from "next/navigation";
 
-
 function Booking() {
+
   const [screenHeight, setScreenHeight] = useState(0);
-  const {carAmount,setCarAmount} = useContext(SelectedCarAmountContext)
-  const router:any=useRouter()
+
+  const { carAmount } = useContext(SelectedCarAmountContext);
+
+  const router = useRouter();
 
   useEffect(() => {
     setScreenHeight(window.innerHeight * 0.72);
   }, []);
+
+  const isDisabled = !carAmount || Number(carAmount) <= 0;
 
   return (
     <div className='p-5'>
@@ -29,14 +32,21 @@ function Booking() {
         <Cars />
         <Cards />
 
-        <button 
-        className={`w-full bg-purple-600 p-1 
-        rounded-md 
-        mt-4 text-white ${!carAmount?'bg-gray-200':null}`}
-        onClick={(() => router.push('/payment'))}
-        // disabled={!carAmount}
-        >Book</button>
-        
+        <button
+          disabled={isDisabled}
+          onClick={() => router.push('/payment')}
+          className={`
+            w-full p-1 rounded-md mt-4 text-white transition-all
+            ${
+              isDisabled
+                ? 'bg-gray-300 cursor-not-allowed'
+                : 'bg-purple-600 hover:bg-purple-700 cursor-pointer'
+            }
+          `}
+        >
+          Book
+        </button>
+
       </div>
     </div>
   );

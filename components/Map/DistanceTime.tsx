@@ -16,12 +16,24 @@ function DistanceTime() {
         </h2> */}
 
 <h2 className='text-white opacity-80 text-[15px] font-bold'>
-        Distance:<span className='font-bold mr-3 text-white'>
-        {(directionData.routes[0].distance*0.000621371192)
-            .toFixed(2)} Miles</span>
-         Duration:<span className='font-bold text-white'>
-         {(directionData.routes[0].duration/60).toFixed(2)} Min </span>
-        </h2>
+  Distance:<span> </span>
+  <span className='font-bold mr-3 text-white'>
+    {(directionData?.routes?.[0]?.distance * 0.000621371192).toFixed(2)} Miles
+  </span>
+
+  Duration:<span> </span>
+  <span className='font-bold text-white'>
+    {(() => {
+      const durationSeconds = directionData?.routes?.[0]?.duration ?? 0;
+      const hours = Math.floor(durationSeconds / 3600);
+      const minutes = Math.floor((durationSeconds % 3600) / 60);
+
+      if (hours === 0) return `${minutes} min`;
+      return `${hours} hr ${minutes} min`;
+    })()}
+  </span>
+</h2>
+
         
     </div>
   )
